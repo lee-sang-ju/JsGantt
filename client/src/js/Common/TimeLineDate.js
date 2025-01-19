@@ -3,21 +3,24 @@
 
 export default class TimeLineDate {
 
-    #_config;
-    construct(config) {
+    #_sdate;
+    #_edate;
 
-        this.#_config = config;
+    construct(sdate, edate) {
+        console.log("-- s - TimeLineDate.construct ----------");
+        this.#_sdate = new Date(sdate.getTime());
+        this.#_edate = new Date(edate.getTime());
+
+        console.log("sdate:", sdate);
+        console.log("edate:", edate);
+        console.log("-- e - TimeLineDate.construct ----------");
     }
 
     get startYear() {
-        const date = this.#_config.staticStartDate;
-        return date.getFullYear();
+        return this.#_sdate.getFullYear();
     }
 
-    get nextYear() {
-        const y = this.year;
-        let date = new Date(this.#_date.getTime());
-        date.setFullYear(y + 1);
-        return date.getFullYear();
+    get endYear() {
+        return this.#_edate.getFullYear();
     }
 }

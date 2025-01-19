@@ -7,7 +7,7 @@ import CHTimeLine from "./CHTimeLine";
 export default class CalendarHeaderGanttView extends AbstractJsGantt {
 
     #_calendarGanttArea;
-    #_chTimeLines;
+    #_chTimeLines = [];
 
     constructor(calendarGanttArea) {
         super("calendarHeaderGanttView-", calendarGanttArea.element);
@@ -33,9 +33,13 @@ export default class CalendarHeaderGanttView extends AbstractJsGantt {
 
     #_initViewThis() {
 
-        const chTimeLine1 = new CHTimeLine(this, 1);
-        const chTimeLine2 = new CHTimeLine(this, 2);
-        const chTimeLine3 = new CHTimeLine(this, 3);
-        this.#_chTimeLines = [chTimeLine1, chTimeLine2, chTimeLine3];
+        const lineMode = this.ganttConfig.calendarViewMode;
+        for(let idx = 0; idx < lineMode.length; idx++) {
+            const chTimeLine = new CHTimeLine(this, idx);
+            this.#_chTimeLines.push(chTimeLine);
+        }
+
+
+
     }
 }

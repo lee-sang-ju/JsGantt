@@ -13,8 +13,6 @@ export default class CHTimeLineItem extends AbstractJsGantt {
         this.#_lineMode = lineMode;
         this.#_chTimeLine = chTimeLine;
         this.#_initThis();
-
-
     }
 
     #_initThis() {

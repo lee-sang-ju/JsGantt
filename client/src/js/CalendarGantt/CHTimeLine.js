@@ -1,11 +1,12 @@
 import AbstractJsGantt from "../AbstractJsGantt";
 import CHTimeLineItem from "./CHTimeLineItem";
+import TimeLineDate from "../Common/TimeLineDate";
 
 export default class CHTimeLine extends AbstractJsGantt {
 
     #_lineMode;
     #_lineNumber;
-    #_chTimeLineItems;
+    #_chTimeLineItems = [];
     #_calendarHeaderGanttView;
 
     #_timeLineDate;
@@ -14,12 +15,25 @@ export default class CHTimeLine extends AbstractJsGantt {
         super("CHTimeLine-", calendarHeaderGanttView.element);
 
         this.#_lineNumber = lineNumber;
-        this.#_lineMode = this.ganttConfig.calendarViewMode[this.#_lineNumber-1];
 
-        this.#_timeLineDate = new TimeLineDate(this.ganttConfig);
+        console.dir(this.ganttConfig);
+
+        this.#_lineMode = this.ganttConfig.calendarViewMode.at(this.#_lineNumber-1);
+        console.log("_lineMode:", this.#_lineMode);
+
+        const sYear = this.ganttConfig.staticStartViewDate.getFullYear();
+        console.log("sYear:"+sYear);
+        const eYear = this.ganttConfig.staticEndViewDate.getFullYear();
+        console.log("eYear:"+eYear);
+
+        this.#_timeLineDate = new TimeLineDate(this.ganttConfig.staticStartViewDate,
+                                                this.ganttConfig.staticEndViewDate);
+
+        console.log("-- s - this.#_timeLineDate  -------------------------------")
 
         this.#_calendarHeaderGanttView = calendarHeaderGanttView;
         this.#_initThis();
+
 
         this.#_initViewThis();
     }
@@ -36,21 +50,17 @@ export default class CHTimeLine extends AbstractJsGantt {
         console.log("calendarViewMode:", this.ganttConfig.calendarViewMode);
         console.log("LineMode:"+this.#_lineMode);
 
-        const stime = this.ganttConfig.staticStartViewDate.getTime();
-        console.log("stime:"+stime);
-        const etime = this.ganttConfig.staticEndViewDate.getTime();
-        console.log("etime:"+etime);
 
 
+        if(this.#_lineMode === "Y") {
 
+            const startYear = this.#_timeLineDate.startYear;
+            const endYear = this.#_timeLineDate.endYear;
 
-
-
-        const chTimeLineItem1 = new CHTimeLineItem(this, this.#_lineMode, 2020);
-        const chTimeLineItem2 = new CHTimeLineItem(this, this.#_lineMode, 2021);
-        const chTimeLineItem3 = new CHTimeLineItem(this, this.#_lineMode, 2022);
-        this.#_chTimeLineItems = [chTimeLineItem1, chTimeLineItem2, chTimeLineItem3];
-
-
+            for(let year = startYear; year <= endYear; year++) {
+                const chTimeLineItem = new CHTimeLineItem(this, this.#_lineMode, year);
+                this.#_chTimeLineItems.push(chTimeLineItem);
+            }
+        }
     }
 }
