@@ -6,7 +6,7 @@
 export default class EndInitViewSizingCalendarGanttAreaEvent {
 
     static get name() {
-        return "end-init-view-sizing-calendar-gantt-area-event";
+        return "EndInitViewSizingCalendarGanttAreaEvent";
     }
 
     static get event() {

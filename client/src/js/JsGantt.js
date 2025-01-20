@@ -5,6 +5,7 @@ import DataGanttArea from "./DataGantt/DataGanttArea";
 import CalendarGanttArea from "./CalendarGantt/CalendarGanttArea";
 import DividerGantt from "./DividerGantt";
 import EndInitViewSizingJsGanttEvent from "./Event/EndInitViewSizingJsGanttEvent";
+import CalendarHeaderGanttView from "./CalendarGantt/CalendarHeaderGanttView";
 
 
 export default class JsGantt extends AbstractJsGantt {
@@ -14,6 +15,12 @@ export default class JsGantt extends AbstractJsGantt {
     #_calendarGanttArea;
 
     constructor(jsGanttConfig, parentElement) {
+        if(typeof parentElement != "object") {
+            throw new TypeError("param calendarHeaderGanttView type is bad");
+        }
+        if(typeof parentElement != "object") {
+            throw new TypeError("param parentElement type is bad");
+        }
         super("jsGantt-", parentElement);
 
         super.ganttConfig = jsGanttConfig;
@@ -44,9 +51,9 @@ export default class JsGantt extends AbstractJsGantt {
             this.#_dataGanttArea.element.style.width = this.ganttConfig.ganttDataViewMinWidth;
         }
 
-        console.log(" w:"+w);
-        console.log(" w1:"+w1);
-        console.log(" w2:"+w2);
+        console.debug(" w:"+w);
+        console.debug(" w1:"+w1);
+        console.debug(" w2:"+w2);
 
         // 데이트영역 보기
         if(this.ganttConfig.ganttDataVisible) {

@@ -28,8 +28,10 @@ export default class ConfigJsGantt {
         // 간트 칼렌다 뷰영역 최소 폭.
         ganttCalendarViewMinWidth: 400,
 
-
-        startViewDate: new Date("2020-01-13T03:24:00")
+        staticStartViewDate: new Date("2020-01-13T03:24:00"),
+        staticEndViewDate: new Date("2020-12-13T03:24:00"),
+        startViewDate: new Date("2020-01-13T03:24:00"),
+        endViewDate: new Date("2020-01-13T03:24:00")
 
     }
 

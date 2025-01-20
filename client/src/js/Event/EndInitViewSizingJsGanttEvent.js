@@ -6,7 +6,7 @@
 export default class EndInitViewSizingJsGanttEvent {
 
     static get name() {
-        return "end-init-view-sizing-js-gantt-event";
+        return "EndInitViewSizingJsGanttEvent";
     }
 
     static get event() {

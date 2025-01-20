@@ -1,66 +1,113 @@
 import AbstractJsGantt from "../AbstractJsGantt";
 import CHTimeLineItem from "./CHTimeLineItem";
 import TimeLineDate from "../Common/TimeLineDate";
+import CalendarHeaderGanttView from "./CalendarHeaderGanttView";
+import EndInitViewSizingCalendarGanttAreaEvent from "../Event/EndInitViewSizingCalendarGanttAreaEvent";
+import EndInitViewThisCalendarHeaderGanttViewEvent from "../Event/EndInitViewThisCalendarHeaderGanttViewEvent";
 
 export default class CHTimeLine extends AbstractJsGantt {
 
     #_lineMode;
     #_lineNumber;
-    #_chTimeLineItems = [];
+    #_chTimeLineItems;
     #_calendarHeaderGanttView;
 
     #_timeLineDate;
 
     constructor(calendarHeaderGanttView, lineNumber) {
+        if(!(calendarHeaderGanttView instanceof CalendarHeaderGanttView)) {
+            throw new TypeError("param calendarHeaderGanttView type is bad");
+        }
+        if(typeof lineNumber != "number") {
+            throw new TypeError("param lineNumber type is bad");
+        }
         super("CHTimeLine-", calendarHeaderGanttView.element);
 
         this.#_lineNumber = lineNumber;
+        this.#_lineMode = this.ganttConfig.calendarViewMode.at(this.#_lineNumber);
 
-        console.dir(this.ganttConfig);
+        this.#_timeLineDate = new TimeLineDate(this.ganttConfig.staticStartViewDate, this.ganttConfig.staticEndViewDate);
+        this.#_chTimeLineItems = [];
 
-        this.#_lineMode = this.ganttConfig.calendarViewMode.at(this.#_lineNumber-1);
-        console.log("_lineMode:", this.#_lineMode);
-
-        const sYear = this.ganttConfig.staticStartViewDate.getFullYear();
-        console.log("sYear:"+sYear);
-        const eYear = this.ganttConfig.staticEndViewDate.getFullYear();
-        console.log("eYear:"+eYear);
-
-        this.#_timeLineDate = new TimeLineDate(this.ganttConfig.staticStartViewDate,
-                                                this.ganttConfig.staticEndViewDate);
-
-        console.log("-- s - this.#_timeLineDate  -------------------------------")
+        console.debug("calendarViewMode:", this.ganttConfig.calendarViewMode, " _lineMode:", this.#_lineMode, " _lineNumber:", this.#_lineNumber);
 
         this.#_calendarHeaderGanttView = calendarHeaderGanttView;
         this.#_initThis();
 
-
-        this.#_initViewThis();
+        document.addEventListener(EndInitViewThisCalendarHeaderGanttViewEvent.name, () => {
+            console.debug("-- s - EndInitViewThisCalendarHeaderGanttViewEvent ------");
+            this.#_initViewThis();
+            console.debug("-- e - EndInitViewThisCalendarHeaderGanttViewEvent ------");
+        });
     }
 
     #_initThis() {
         const el = document.createElement("div");
         el.id = this.id;
-        el.className = "h-7 bg-slate-200 relative";
+        el.className = "h-7 bg-amber-200 relative";
         this.parentElement.append(el);
+
+        console.debug("calendarViewMode:", this.ganttConfig.calendarViewMode);
+        console.debug("LineMode:"+this.#_lineMode);
+
+        if(this.#_lineMode === "Y") {
+            this.#_timeLineDate.years.forEach((v) => {
+                const chTimeLineItem = new CHTimeLineItem(this, this.#_lineMode, v);
+                this.#_chTimeLineItems.push(chTimeLineItem);
+            });
+        } else if(this.#_lineMode === "Q") {
+            this.#_timeLineDate.quarters.forEach((q) => {
+                const chTimeLineItem = new CHTimeLineItem(this, this.#_lineMode, q);
+                this.#_chTimeLineItems.push(chTimeLineItem);
+            });
+        } else if(this.#_lineMode === "M") {
+            this.#_timeLineDate.months.forEach((v) => {
+                const chTimeLineItem = new CHTimeLineItem(this, this.#_lineMode, v);
+                this.#_chTimeLineItems.push(chTimeLineItem);
+            });
+        }
+        else if(this.#_lineMode === "W") {
+            this.#_timeLineDate.weeks.forEach((v) => {
+                const chTimeLineItem = new CHTimeLineItem(this, this.#_lineMode, v);
+                this.#_chTimeLineItems.push(chTimeLineItem);
+            });
+        }
+        else if(this.#_lineMode === "D") {
+            this.#_timeLineDate.dates.forEach((v) => {
+                const chTimeLineItem = new CHTimeLineItem(this, this.#_lineMode, v);
+                this.#_chTimeLineItems.push(chTimeLineItem);
+            });
+        }
+        else if(this.#_lineMode === "H") this.#_initThisLineModeH();
+        else if(this.#_lineMode === "m") this.#_initThisLineModem();
+        else if(this.#_lineMode === "S") this.#_initThisLineModeS();
+    }
+
+
+    #_initThisLineModeH() {
+
+    }
+
+    #_initThisLineModem() {
+
+    }
+
+    #_initThisLineModeS() {
+
     }
 
     #_initViewThis() {
 
-        console.log("calendarViewMode:", this.ganttConfig.calendarViewMode);
-        console.log("LineMode:"+this.#_lineMode);
+        const count = this.#_chTimeLineItems.length;
 
+        const w = this.element.offsetWidth / count;
 
+        this.#_chTimeLineItems.forEach((chTimeLineItem, idx) => {
 
-        if(this.#_lineMode === "Y") {
+            chTimeLineItem.element.style.width = w+"px";
+            chTimeLineItem.element.style.left = (w * idx)+"px";
 
-            const startYear = this.#_timeLineDate.startYear;
-            const endYear = this.#_timeLineDate.endYear;
+        });
 
-            for(let year = startYear; year <= endYear; year++) {
-                const chTimeLineItem = new CHTimeLineItem(this, this.#_lineMode, year);
-                this.#_chTimeLineItems.push(chTimeLineItem);
-            }
-        }
     }
 }

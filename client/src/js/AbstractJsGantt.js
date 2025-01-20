@@ -24,11 +24,7 @@ export default class AbstractJsGantt {
     }
 
     get random() {
-        const n = Math.random();
-        console.log("n:"+n);
-        const s = n * 10000000000000000;
-        console.log("s:"+s);
-        return s;
+        return Math.floor(Math.random() * 99999999999999999999).toFixed(0);
     }
 
     get id() {

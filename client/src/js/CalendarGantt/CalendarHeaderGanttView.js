@@ -3,6 +3,7 @@ import CalendarGanttArea from "./CalendarGanttArea";
 import EndInitViewSizingJsGanttEvent from "../Event/EndInitViewSizingJsGanttEvent";
 import EndInitViewSizingCalendarGanttAreaEvent from "../Event/EndInitViewSizingCalendarGanttAreaEvent";
 import CHTimeLine from "./CHTimeLine";
+import EndInitViewThisCalendarHeaderGanttViewEvent from "../Event/EndInitViewThisCalendarHeaderGanttViewEvent";
 
 export default class CalendarHeaderGanttView extends AbstractJsGantt {
 
@@ -32,14 +33,11 @@ export default class CalendarHeaderGanttView extends AbstractJsGantt {
     }
 
     #_initViewThis() {
-
         const lineMode = this.ganttConfig.calendarViewMode;
         for(let idx = 0; idx < lineMode.length; idx++) {
             const chTimeLine = new CHTimeLine(this, idx);
             this.#_chTimeLines.push(chTimeLine);
         }
-
-
-
+        this.element.dispatchEvent(EndInitViewThisCalendarHeaderGanttViewEvent.event);
     }
 }
