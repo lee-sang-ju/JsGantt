@@ -4,7 +4,7 @@ export default class CommonUtils {
 
 
 
-    static getWeek(value) {
+    public static getWeek(value : Date): number {
 
 
         var date = new Date(value.toJSON());

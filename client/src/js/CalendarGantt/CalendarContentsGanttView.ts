@@ -3,13 +3,13 @@ import CalendarGanttArea from "./CalendarGanttArea";
 
 export default class CalendarContentsGanttView extends AbstractJsGantt {
 
-    #_calendarGanttArea;
+    private _calendarGanttArea: CalendarGanttArea;
 
-    constructor(calendarGanttArea) {
+    constructor(calendarGanttArea: CalendarGanttArea) {
         super("calendarContentsGanttView-", calendarGanttArea.element);
 
 
-        this.#_calendarGanttArea = calendarGanttArea;
+        this._calendarGanttArea = calendarGanttArea;
 
 
         this._initThis();

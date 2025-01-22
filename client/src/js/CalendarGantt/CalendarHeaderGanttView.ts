@@ -7,36 +7,36 @@ import EndInitViewThisCalendarHeaderGanttViewEvent from "../Event/EndInitViewThi
 
 export default class CalendarHeaderGanttView extends AbstractJsGantt {
 
-    #_calendarGanttArea;
-    #_chTimeLines = [];
+    private _calendarGanttArea: CalendarGanttArea;
+    private _chTimeLines: Array<CHTimeLine> = new Array<CHTimeLine>();
 
-    constructor(calendarGanttArea) {
+    constructor(calendarGanttArea: CalendarGanttArea) {
         super("calendarHeaderGanttView-", calendarGanttArea.element);
 
-        this.#_calendarGanttArea = calendarGanttArea;
+        this._calendarGanttArea = calendarGanttArea;
 
-        this.#_initThis();
+        this._initThis();
 
         document.addEventListener(EndInitViewSizingCalendarGanttAreaEvent.name, () => {
             console.debug("-- s - EndInitViewSizingCalendarGanttAreaEvent ------");
-            this.#_initViewThis();
+            this._initViewThis();
             console.debug("-- e - EndInitViewSizingCalendarGanttAreaEvent ------");
         });
     }
 
 
-    #_initThis() {
+    private _initThis() {
         const el = document.createElement("div");
         el.id = this.id;
         el.className = "absolute h-24 bg-emerald-300 ";
         this.parentElement.append(el);
     }
 
-    #_initViewThis() {
+    private _initViewThis() {
         const lineMode = this.ganttConfig.calendarViewMode;
         for(let idx = 0; idx < lineMode.length; idx++) {
             const chTimeLine = new CHTimeLine(this, idx);
-            this.#_chTimeLines.push(chTimeLine);
+            this._chTimeLines.push(chTimeLine);
         }
         this.element.dispatchEvent(EndInitViewThisCalendarHeaderGanttViewEvent.event);
     }

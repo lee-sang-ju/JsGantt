@@ -3,25 +3,25 @@
 
 export default class TimeLineDate {
 
-    #_sdate;
-    #_edate;
+    private _sdate: Date;
+    private _edate: Date;
 
-    constructor(sdate, edate) {
+    constructor(sdate : Date, edate: Date) {
         //console.log("-- s - TimeLineDate.construct ----------");
         if(!(sdate instanceof Date && edate instanceof Date)) {
             throw new TypeError("param is bad type, param type is Date");
         }
-        this.#_sdate = new Date(sdate.toJSON());
-        this.#_edate = new Date(edate.toJSON());
+        this._sdate = new Date(sdate.toJSON());
+        this._edate = new Date(edate.toJSON());
 
         // console.log("sdate:", sdate);
         // console.log("edate:", edate);
         // console.log("-- e - TimeLineDate.construct ----------");
     }
 
-    get years() {
-        const endTime = this.#_edate.getTime();
-        const date = new Date(this.#_sdate.toJSON());
+    public get years() {
+        const endTime = this._edate.getTime();
+        const date = new Date(this._sdate.toJSON());
 
         let a = [];
         while(date.getTime() <= endTime) {
@@ -31,9 +31,9 @@ export default class TimeLineDate {
         return a;
     }
 
-    get quarters() {
-        const endTime = this.#_edate.getTime();
-        const date = new Date(this.#_sdate.toJSON());
+    public get quarters() {
+        const endTime = this._edate.getTime();
+        const date = new Date(this._sdate.toJSON());
 
         let a = [];
         while(date.getTime() <= endTime) {
@@ -43,9 +43,9 @@ export default class TimeLineDate {
         return a;
     }
 
-    get months() {
-        const endTime = this.#_edate.getTime();
-        const date = new Date(this.#_sdate.toJSON());
+    public get months() {
+        const endTime = this._edate.getTime();
+        const date = new Date(this._sdate.toJSON());
 
         let a = [];
         while(date.getTime() <= endTime) {
@@ -55,9 +55,9 @@ export default class TimeLineDate {
         return a;
     }
 
-    get weeks() {
-        const endTime = this.#_edate.getTime();
-        const date = new Date(this.#_sdate.toJSON());
+    public get weeks() {
+        const endTime = this._edate.getTime();
+        const date = new Date(this._sdate.toJSON());
 
         let a = [];
         while(date.getTime() <= endTime) {
@@ -67,9 +67,9 @@ export default class TimeLineDate {
         return a;
     }
 
-    get dates() {
-        const endTime = this.#_edate.getTime();
-        const date = new Date(this.#_sdate.toJSON());
+    public get dates() {
+        const endTime = this._edate.getTime();
+        const date = new Date(this._sdate.toJSON());
 
         let a = [];
         while(date.getTime() <= endTime) {
@@ -79,9 +79,9 @@ export default class TimeLineDate {
         return a;
     }
 
-    get hours() {
-        const endTime = this.#_edate.getTime();
-        const date = new Date(this.#_sdate.toJSON());
+    public get hours() {
+        const endTime = this._edate.getTime();
+        const date = new Date(this._sdate.toJSON());
 
         let a = [];
         while(date.getTime() <= endTime) {
@@ -91,9 +91,9 @@ export default class TimeLineDate {
         return a;
     }
 
-    get minutes() {
-        const endTime = this.#_edate.getTime();
-        const date = new Date(this.#_sdate.toJSON());
+    public get minutes() {
+        const endTime = this._edate.getTime();
+        const date = new Date(this._sdate.toJSON());
 
         let a = [];
         while(date.getTime() <= endTime) {
@@ -103,9 +103,9 @@ export default class TimeLineDate {
         return a;
     }
 
-    get seconds() {
-        const endTime = this.#_edate.getTime();
-        const date = new Date(this.#_sdate.toJSON());
+    public get seconds() {
+        const endTime = this._edate.getTime();
+        const date = new Date(this._sdate.toJSON());
 
         let a = [];
         while(date.getTime() <= endTime) {

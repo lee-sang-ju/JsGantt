@@ -1,9 +1,11 @@
-import _ from 'lodash';
+
+import ConfigJsGantt from "../Config/ConfigJsGantt";
 
 export default class GanttConfigError extends Error {
 
-    constructor(props) {
-        super(props);
+    constructor(msg: string) {
+        super();
+        this.message = msg;
     }
 
 
@@ -13,7 +15,7 @@ export default class GanttConfigError extends Error {
      *
      * @param ganttConfig
      */
-    static checkGanttConfig(ganttConfig) {
+    public static checkGanttConfig(ganttConfig: ConfigJsGantt) {
 
         if(!ganttConfig) {
             throw new GanttConfigError("ganttConfig is invalid");
