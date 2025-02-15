@@ -32,8 +32,6 @@ export default class ConfigJsGantt {
     public startViewDate : Date = new Date("2020-01-13T03:24:00");
     public endViewDate : Date = new Date("2020-01-13T03:24:00");
 
-
-
     private static _defaultConfig : ConfigJsGantt = new ConfigJsGantt();
 
     public static get defaultConfig() {

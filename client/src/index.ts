@@ -18,6 +18,5 @@ function component() {
         }
     }
     const jsGantt = new JsGantt(jsGanttConfig, divJsGantt);
-
 }
 component();
